@@ -41,14 +41,14 @@ export function renderLottoBalls(games) {
 // GIF 애니메이션 제어
 export function playGenerationAnimation() {
     // 1. GIF 재생 시작 (타임스탬프로 캐시 무력화하여 처음부터 재생)
-    ELEMENTS.character.src = `/assets/character_anim.gif?t=${Date.now()}`;
+    ELEMENTS.character.src = `assets/character_anim.gif?t=${Date.now()}`;
 
     ELEMENTS.bubble.classList.add('hidden');
 
     return new Promise(resolve => {
         setTimeout(() => {
             // 2. 8초 후 정지 이미지(character_end.png)로 교체
-            ELEMENTS.character.src = '/assets/character_end.png';
+            ELEMENTS.character.src = 'assets/character_end.png';
 
             resolve();
         }, 8000); // 8초 재생
@@ -129,7 +129,7 @@ export async function saveScreenshot() {
 }
 
 export function resetUI() {
-    ELEMENTS.character.src = '/assets/character_start.png';
+    ELEMENTS.character.src = 'assets/character_start.png';
     ELEMENTS.lottoResult.innerHTML = '<div class="placeholder-text">버튼을 눌러 번호를 생성해보세요!</div>';
     ELEMENTS.bubble.classList.add('hidden');
 }
