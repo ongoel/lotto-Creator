@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap');
+
+:root {
+  --primary-color: #FFD700;
+  --secondary-color: #FF6B6B;
+  --bg-color: #f0f4f8;
+  --text-color: #333;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --font-main: 'Poor Story', cursive, sans-serif;
+  /* 귀여운 폰트 가정, 실제론 웹폰트 로드 필요 */
+  --ball-color-1: #fbc400;
+  --ball-color-10: #69c8f2;
+  --ball-color-20: #ff7272;
+  --ball-color-30: #aaa;
+  --ball-color-40: #b0d840;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a2e;
+  --text-color: #eaeaea;
+  --card-bg: rgba(26, 26, 46, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  position: relative;
+  background: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-family: 'Jua', sans-serif;
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--secondary-color);
+}
+
+.icon-btn,
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 30px;
+}
+
+.character-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#character {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s;
+}
+
+.bounce {
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.speech-bubble {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: white;
+  color: #333;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border-bottom-left-radius: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Jua', sans-serif;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.speech-bubble.hidden {
+  opacity: 0;
+}
+
+.lotto-container {
+  width: 100%;
+  min-height: 120px;
+  padding: 20px;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.placeholder-text {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.lotto-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lotto-ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-family: 'Jua', sans-serif;
+  color: white;
+  box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  opacity: 0;
+  transform: scale(0);
+}
+
+@keyframes popIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.generation-btns {
+  display: flex;
+  gap: 15px;
+}
+
+button {
+  font-family: 'Jua', sans-serif;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #FFD700 0%, #FFAA00 100%);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.secondary-btn {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%);
+}
+
+.action-btns {
+  display: flex;
+  gap: 15px;
+}
+
+.action-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: var(--bg-color);
+  width: 90%;
+  max-width: 400px;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.toggle-btn {
+  background: var(--card-bg);
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.history-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.history-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.danger-btn {
+  width: 100%;
+  padding: 10px;
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px;
+}
