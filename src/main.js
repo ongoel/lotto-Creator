@@ -1,6 +1,6 @@
 import './style.css';
 import { generateLottoGames } from './lotto.js';
-import { getHistory, saveHistory, clearHistory } from './storage.js';
+import { getHistory, saveHistory, clearHistory, saveToSpreadsheet } from './storage.js';
 import {
   renderLottoBalls,
   playGenerationAnimation,
@@ -8,10 +8,12 @@ import {
   renderHistory,
   saveScreenshot,
   toggleModal,
-  ELEMENTS
+  ELEMENTS,
+  resetUI
 } from './ui.js';
 
 // 이벤트 리스너 설정
+document.getElementById('app-title').addEventListener('click', resetUI);
 document.getElementById('gen-1-btn').addEventListener('click', () => handleGenerate(1));
 document.getElementById('gen-5-btn').addEventListener('click', () => handleGenerate(5));
 document.getElementById('save-btn').addEventListener('click', saveScreenshot);
@@ -32,20 +34,20 @@ document.getElementById('clear-history-btn').addEventListener('click', () => {
   }
 });
 
-function handleGenerate(count) {
-  playGenerationAnimation();
+async function handleGenerate(count) {
+  // 결과 영역 초기화 (애니메이션 동안 이전 결과 숨김)
+  document.getElementById('lotto-result').innerHTML = '<div class="placeholder-text">행운을 모으는 중...</div>';
 
-  // 애니메이션 시간 등을 고려하여 약간의 지연 후 표시 (선택 사항)
-  // 여기서는 즉시 생성하지만 UI에서 애니메이션 지연이 처리됨
+  await playGenerationAnimation();
+
   const games = generateLottoGames(count);
   renderLottoBalls(games);
   saveHistory(games);
+  saveToSpreadsheet(games); // 구글 시트로 전송
 }
 
 // 초기화
-const history = getHistory();
-if (history.length > 0) {
-  // 마지막 게임 로드? 아니면 그냥 빈 상태? 
-  // 사용자가 앱을 켰을 때 바로 마지막 기록을 보여주는 것도 좋음
-  renderLottoBalls(history[0].games);
-}
+// const history = getHistory();
+// if (history.length > 0) {
+//   renderLottoBalls(history[0].games);
+// }

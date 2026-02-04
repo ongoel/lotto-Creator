@@ -19,6 +19,12 @@ export function renderLottoBalls(games) {
         const row = document.createElement('div');
         row.className = 'lotto-row';
 
+        // 게임 라벨 추가 (ex: 1게임)
+        const label = document.createElement('div');
+        label.className = 'game-label';
+        label.textContent = `${index + 1}게임`;
+        row.appendChild(label);
+
         game.forEach((num, i) => {
             const ball = document.createElement('div');
             ball.className = 'lotto-ball';
@@ -32,25 +38,28 @@ export function renderLottoBalls(games) {
     });
 }
 
+// GIF 애니메이션 제어
 export function playGenerationAnimation() {
-    ELEMENTS.character.classList.add('bounce');
-    ELEMENTS.bubble.classList.remove('hidden');
-    ELEMENTS.bubble.textContent = "번호가 나오고 있어요!";
+    // 1. GIF 재생 시작 (타임스탬프로 캐시 무력화하여 처음부터 재생)
+    ELEMENTS.character.src = `/assets/character_anim.gif?t=${Date.now()}`;
 
-    setTimeout(() => {
-        ELEMENTS.character.classList.remove('bounce');
-        ELEMENTS.bubble.textContent = "짠! 오늘의 행운입니다!";
+    ELEMENTS.bubble.classList.add('hidden');
+
+    return new Promise(resolve => {
         setTimeout(() => {
-            ELEMENTS.bubble.classList.add('hidden');
-        }, 2000);
-    }, 1000);
+            // 2. 8초 후 정지 이미지(character_end.png)로 교체
+            ELEMENTS.character.src = '/assets/character_end.png';
+
+            resolve();
+        }, 8000); // 8초 재생
+    });
 }
 
 export function toggleTheme() {
     const currentTheme = document.body.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', newTheme);
-    ELEMENTS.themeToggle.textContent = newTheme === 'dark' ? '☀️ 라이트 모드' : '🌙 다크 모드';
+    ELEMENTS.themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
 }
 
 export function renderHistory(history) {
@@ -85,7 +94,30 @@ export function renderHistory(history) {
 
 export async function saveScreenshot() {
     try {
-        const canvas = await html2canvas(ELEMENTS.app); // 전체 앱 캡처
+        // html2canvas가 캡처 시 애니메이션을 다시 시작하여 공이 안 보이는 문제 해결
+        // 전체 앱 대신 로또 결과 영역(ELEMENTS.lottoResult)만 캡처하도록 변경
+        const canvas = await html2canvas(ELEMENTS.lottoResult, {
+            backgroundColor: null, // 투명 배경 유지 (필요 시)
+            scale: 2, // 고해상도 캡처
+            onclone: (clonedDoc) => {
+                // 복제된 DOM에서 애니메이션 제거 및 스타일 강제 적용
+                const balls = clonedDoc.querySelectorAll('.lotto-ball');
+                balls.forEach(ball => {
+                    ball.style.animation = 'none';
+                    ball.style.opacity = '1';
+                    ball.style.transform = 'scale(1)';
+                });
+
+                // 캡처 시 배경 스타일 조정 (깔끔하게 보이도록)
+                const container = clonedDoc.querySelector('.lotto-container');
+                if (container) {
+                    container.style.backdropFilter = 'none';
+                    container.style.background = 'white'; // 흰색 배경으로 고정
+                    container.style.boxShadow = 'none'; // 그림자 제거 또는 조정
+                    container.style.borderRadius = '20px';
+                }
+            }
+        });
         const link = document.createElement('a');
         link.download = `lotto_${Date.now()}.png`;
         link.href = canvas.toDataURL();
@@ -94,6 +126,12 @@ export async function saveScreenshot() {
         console.error('Screenshot failed:', err);
         alert('스크린샷 저장에 실패했습니다.');
     }
+}
+
+export function resetUI() {
+    ELEMENTS.character.src = '/assets/character_start.png';
+    ELEMENTS.lottoResult.innerHTML = '<div class="placeholder-text">버튼을 눌러 번호를 생성해보세요!</div>';
+    ELEMENTS.bubble.classList.add('hidden');
 }
 
 export function toggleModal(modalId, show) {

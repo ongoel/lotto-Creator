@@ -55,6 +55,11 @@ header {
   align-items: center;
 }
 
+.header-controls {
+  display: flex;
+  gap: 10px;
+}
+
 h1 {
   font-family: 'Jua', sans-serif;
   font-size: 1.8rem;
@@ -83,10 +88,13 @@ main {
 .character-container {
   position: relative;
   width: 200px;
-  height: 200px;
+  min-height: 200px;
+  /* 고정 height 대신 min-height 사용 */
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  /* 헤더와의 간격 추가 */
 }
 
 #character {
@@ -157,7 +165,18 @@ main {
   display: flex;
   gap: 10px;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  width: 100%;
+}
+
+.game-label {
+  font-family: 'Jua', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin-right: 5px;
+  min-width: 50px;
+  text-align: right;
 }
 
 .lotto-ball {

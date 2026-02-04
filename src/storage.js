@@ -34,3 +34,25 @@ export function saveHistory(games) {
 export function clearHistory() {
     localStorage.removeItem(STORAGE_KEY);
 }
+
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzQQQRPu6NpzDyz0i-sgVPg0H7_bIjPTRAVvHYEedrUqTPyYwKaa8wKjUP3X6jfpMSI/exec";
+
+/**
+ * 구글 스프레드시트로 데이터 전송
+ * @param {Array} games 생성된 게임 배열
+ */
+export function saveToSpreadsheet(games) {
+    // 백그라운드에서 실행 (await 안 함)
+    fetch(GAS_URL, {
+        method: "POST",
+        mode: "no-cors", // CORS 정책 우회 (단방향 전송)
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ games: games })
+    }).then(() => {
+        console.log("Data sent to spreadsheet");
+    }).catch(err => {
+        console.error("Failed to send data to spreadsheet", err);
+    });
+}

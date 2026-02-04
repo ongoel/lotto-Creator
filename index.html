@@ -1,73 +1,76 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>오늘의 로또</title>
-    <meta name="description" content="귀여운 캐릭터와 함께하는 오늘의 로또 번호 생성기" />
-  </head>
-  <body>
-    <div id="app">
-      <header>
-        <h1>오늘의 로또</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오늘의 로또</title>
+  <meta name="description" content="귀여운 캐릭터와 함께하는 오늘의 로또 번호 생성기" />
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1 id="app-title" style="cursor: pointer;">오늘의 로또</h1>
+      <div class="header-controls">
+        <button id="theme-toggle" class="icon-btn" aria-label="테마 변경">🌙</button>
         <button id="settings-btn" aria-label="설정" class="icon-btn">⚙️</button>
-      </header>
+      </div>
+    </header>
 
-      <main id="main-view">
-        <div class="character-container">
-          <img src="/assets/character.png" alt="로또 캐릭터" id="character" class="bounce" />
-          <div id="bubble" class="speech-bubble hidden">행운을 빌어요!</div>
-        </div>
-
-        <div id="lotto-result" class="lotto-container">
-          <!-- 로또 번호가 여기에 표시됩니다 -->
-          <div class="placeholder-text">버튼을 눌러 번호를 생성해보세요!</div>
-        </div>
-
-        <div class="controls">
-          <div class="generation-btns">
-            <button id="gen-1-btn" class="primary-btn">1게임 생성</button>
-            <button id="gen-5-btn" class="secondary-btn">5게임 생성</button>
-          </div>
-          <div class="action-btns">
-            <button id="save-btn" class="action-btn" title="이미지로 저장">📸</button>
-            <button id="history-btn" class="action-btn" title="히스토리">📜</button>
-          </div>
-        </div>
-      </main>
-
-      <div id="settings-view" class="modal hidden">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2>설정</h2>
-            <button id="close-settings-btn" class="close-btn">×</button>
-          </div>
-          <div class="modal-body">
-            <div class="setting-item">
-              <label for="theme-toggle">테마 설정</label>
-              <button id="theme-toggle" class="toggle-btn">🌙 다크 모드</button>
-            </div>
-            <!-- 추가 설정 항목들 예정 -->
-          </div>
-        </div>
+    <main id="main-view">
+      <div class="character-container">
+        <img src="/assets/character_start.png" alt="로또 캐릭터" id="character" />
+        <div id="bubble" class="speech-bubble hidden">행운을 빌어요!</div>
       </div>
 
-      <div id="history-view" class="modal hidden">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2>생성 기록</h2>
-            <button id="close-history-btn" class="close-btn">×</button>
-          </div>
-          <div class="modal-body">
-            <ul id="history-list" class="history-list">
-              <!-- 기록 아이템 -->
-            </ul>
-            <button id="clear-history-btn" class="danger-btn">기록 전체 삭제</button>
-          </div>
+      <div id="lotto-result" class="lotto-container">
+        <!-- 로또 번호가 여기에 표시됩니다 -->
+        <div class="placeholder-text">버튼을 눌러 번호를 생성해보세요!</div>
+      </div>
+
+      <div class="controls">
+        <div class="generation-btns">
+          <button id="gen-1-btn" class="primary-btn">1게임 생성</button>
+          <button id="gen-5-btn" class="secondary-btn">5게임 생성</button>
+        </div>
+        <div class="action-btns">
+          <button id="save-btn" class="action-btn" title="이미지로 저장">📸</button>
+          <button id="history-btn" class="action-btn" title="히스토리">📜</button>
+        </div>
+      </div>
+    </main>
+
+    <div id="settings-view" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>설정</h2>
+          <button id="close-settings-btn" class="close-btn">×</button>
+        </div>
+        <div class="modal-body">
+          <!-- 추가 설정 항목들 예정 -->
+          <p>더 많은 설정이 곧 추가될 예정입니다.</p>
         </div>
       </div>
     </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+    <div id="history-view" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>생성 기록</h2>
+          <button id="close-history-btn" class="close-btn">×</button>
+        </div>
+        <div class="modal-body">
+          <ul id="history-list" class="history-list">
+            <!-- 기록 아이템 -->
+          </ul>
+          <button id="clear-history-btn" class="danger-btn">기록 전체 삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>
